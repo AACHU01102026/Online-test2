@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Online Test</title>
+
+<script>
+let time = 120; // ⏱️ TIME YAHAN SET KARO (seconds)
+let finalScore = 0;
+let testFinished = false;
+
+function startTimer(){
+let timer = setInterval(function(){
+document.getElementById("timer").innerHTML = time;
+time--;
+
+if(time < 0){
+clearInterval(timer);
+submitTest();
+}
+},1000);
+}
+
+function submitTest(){
+if(testFinished) return;
+
+testFinished = true;
+let score = 0;
+
+let answers = {
+q1:"a",
+q2:"b"
+};
+
+for(let q in answers){
+let selected = document.querySelector('input[name="'+q+'"]:checked');
+if(selected && selected.value == answers[q]){
+score++;
+}
+}
+
+finalScore = score;
+
+// ❌ result yahan show NAHI hoga
+document.getElementById("msg").innerHTML =
+"Test Submitted ✔️<br>Result baad me show hoga.";
+}
+
+function showResult(){
+if(!testFinished){
+alert("Pehle test submit hone do");
+return;
+}
+document.getElementById("result").innerHTML =
+"Final Result: "+finalScore+"/2";
+}
+</script>
+
+</head>
+
+<body onload="startTimer()">
+
+<h2>Online Test</h2>
+
+<h3>Time Left: <span id="timer">120</span> sec</h3>
+
+<!-- QUESTION 1 -->
+<p>1. India ki capital kya hai?</p>
+<input type="radio" name="q1" value="a"> Delhi <br>
+<input type="radio" name="q1" value="b"> Mumbai <br>
+<input type="radio" name="q1" value="c"> Kolkata <br>
+
+<!-- QUESTION 2 -->
+<p>2. Earth ka sabse bada ocean kaunsa hai?</p>
+<input type="radio" name="q2" value="a"> Atlantic <br>
+<input type="radio" name="q2" value="b"> Pacific <br>
+<input type="radio" name="q2" value="c"> Indian <br>
+
+<br><br>
+
+<button onclick="submitTest()">Submit Test</button>
+<button onclick="showResult()">Show Result</button>
+
+<h3 id="msg"></h3>
+<h3 id="result"></h3>
+
+</body>
+</html>
